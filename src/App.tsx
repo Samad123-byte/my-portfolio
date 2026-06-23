@@ -613,7 +613,7 @@ const Skills = () => {
     {
       title: 'WordPress Development',
       icon: <Code2 size={24} />,
-      skills: ['Custom Themes', 'Plugins', 'Elementor Pro', 'ACF', 'CPT UI'],
+      skills: ['Custom Themes & Plugins', 'Avada', 'Elementor Pro', 'woocommerce', 'ACF', 'CPT UI'],
       note: 'Client websites and CMS-based solutions'
     },
     {

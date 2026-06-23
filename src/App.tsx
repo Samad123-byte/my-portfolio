@@ -1,35 +1,57 @@
-import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
+// App.tsx
+import { motion, AnimatePresence, useScroll, useTransform, useInView, type Variants } from 'motion/react';
 import { Menu, X, Github, Linkedin, Mail, ArrowUpRight, ExternalLink, Code2, Layout, Terminal, Target, Lightbulb, TrendingUp, Briefcase, CheckCircle2 } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import HireMeStats from './components/HireMeStats';
 import { MapAnimation, AIAnimation, ChatAnimation } from './components/ProjectAnimations';
 
+// Mounts children only when scrolled near the viewport, and unmounts them
+// when far away — stops the heavy infinite project animations from running
+// (and stuttering scroll) while you're nowhere near them.
+const LazyMount = ({ children }: { children: React.ReactNode }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { margin: '200px 0px 200px 0px' });
+  return (
+    <div ref={ref} className="w-full h-full">
+      {isInView ? children : null}
+    </div>
+  );
+};
+
 const CustomCursor = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const frameRef = useRef<number | null>(null);
 
   useEffect(() => {
+    // Skip entirely on touch devices — there's no real cursor to chase
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
+      if (frameRef.current) return;
+      const { clientX, clientY } = e;
+      frameRef.current = requestAnimationFrame(() => {
+        setMousePos({ x: clientX, y: clientY });
+        frameRef.current = null;
+      });
     };
     const handleMouseOver = (e: MouseEvent) => {
-      if ((e.target as HTMLElement).tagName === 'A' || (e.target as HTMLElement).tagName === 'BUTTON') {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
-      }
+      const tag = (e.target as HTMLElement).tagName;
+      setIsHovering(tag === 'A' || tag === 'BUTTON');
     };
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseover', handleMouseOver);
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseover', handleMouseOver);
+      if (frameRef.current) cancelAnimationFrame(frameRef.current);
     };
   }, []);
 
   return (
     <motion.div
       className="fixed top-0 left-0 w-8 h-8 border-2 border-accent rounded-full pointer-events-none z-[9999] hidden md:block"
+      style={{ willChange: 'transform' }}
       animate={{
         x: mousePos.x - 16,
         y: mousePos.y - 16,
@@ -51,7 +73,6 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Lock body scroll while mobile menu is open
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
@@ -129,8 +150,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Mobile Menu — rendered as a SIBLING of <nav>, not nested inside it,
-          so it always positions relative to the real viewport regardless of scroll state */}
+      {/* Mobile Menu — rendered as a SIBLING of <nav>, never nested inside it */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -176,7 +196,7 @@ const Hero = () => {
   const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-  const nameVariants = {
+  const nameVariants: Variants = {
     hidden: { opacity: 0, y: 100 },
     visible: (i: number) => ({
       opacity: 1,
@@ -184,15 +204,15 @@ const Hero = () => {
       transition: {
         delay: 0.2 + i * 0.1,
         duration: 0.8,
-        ease: [0.16, 1, 0.3, 1]
+        ease: [0.16, 1, 0.3, 1] as [number, number, number, number]
       }
     })
   };
 
   return (
-    <section ref={containerRef} className="min-h-screen pt-32 pb-20 px-6 flex items-center relative overflow-hidden bg-bg-dark">
-      <div className="absolute top-1/4 -right-20 w-[600px] h-[600px] bg-accent/10 blur-[150px] rounded-full animate-pulse" />
-      <div className="absolute bottom-1/4 -left-20 w-[500px] h-[500px] bg-accent/5 blur-[120px] rounded-full" />
+    <section ref={containerRef} className="min-h-screen pt-28 pb-16 px-6 flex items-center relative overflow-hidden bg-bg-dark">
+      <div className="absolute top-1/4 -right-20 w-[600px] h-[600px] bg-accent/10 blur-[100px] rounded-full" />
+      <div className="absolute bottom-1/4 -left-20 w-[500px] h-[500px] bg-accent/5 blur-[90px] rounded-full" />
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <motion.div style={{ y, opacity }}>
@@ -200,7 +220,7 @@ const Hero = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="flex items-center gap-3 mb-12"
+            className="flex items-center gap-3 mb-10"
           >
             <div className="w-16 h-[1px] bg-accent" />
             <span className="text-[10px] font-black tracking-[0.6em] text-secondary uppercase">
@@ -208,11 +228,11 @@ const Hero = () => {
             </span>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start mb-12">
             <div className="lg:col-span-7">
               <div className="flex flex-col items-start w-full">
                 <div className="overflow-hidden w-full">
-                  <motion.h1 
+                  <motion.h1
                     custom={0}
                     variants={nameVariants}
                     initial="hidden"
@@ -223,18 +243,18 @@ const Hero = () => {
                   </motion.h1>
                 </div>
                 <div className="overflow-hidden w-full">
-              <motion.h1 
-  custom={1}
-  variants={nameVariants}
-  initial="hidden"
-  animate="visible"
-  className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter uppercase text-white"
->
-  SAMAD
-</motion.h1>
+                  <motion.h1
+                    custom={1}
+                    variants={nameVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter uppercase text-white"
+                  >
+                    SAMAD
+                  </motion.h1>
                 </div>
                 <div className="overflow-hidden w-full">
-                  <motion.h1 
+                  <motion.h1
                     custom={2}
                     variants={nameVariants}
                     initial="hidden"
@@ -248,7 +268,7 @@ const Hero = () => {
             </div>
 
             <div className="lg:col-span-5 lg:pt-4">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.6 }}
@@ -257,21 +277,21 @@ const Hero = () => {
                 <p className="text-base md:text-lg text-secondary leading-relaxed font-medium max-w-md">
                  Full-stack developer working with MERN and WordPress, with backend experience from a .NET internship. Currently seeking a junior developer role to contribute to real projects and grow in a team environment.
                 </p>
-                
+
                 <div className="flex flex-wrap gap-4">
-                  <motion.a 
+                  <motion.a
                     whileHover={{ scale: 1.05, x: 5 }}
                     whileTap={{ scale: 0.95 }}
-                    href="#projects" 
+                    href="#projects"
                     className="bg-accent text-bg-dark px-8 py-4 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-bg-light transition-all flex items-center gap-2 group shadow-xl shadow-accent/20"
                   >
                     View Work
                     <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                   </motion.a>
-                  <motion.a 
+                  <motion.a
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    href="#contact" 
+                    href="#contact"
                     className="bg-white/5 backdrop-blur-xl border border-white/20 text-bg-light px-8 py-4 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-white/10 hover:border-accent transition-all"
                   >
                     Let's Talk
@@ -283,17 +303,18 @@ const Hero = () => {
         </motion.div>
       </div>
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
       >
         <span className="text-[10px] font-black uppercase tracking-[0.5em] text-secondary">Scroll</span>
-        <motion.div 
+        <motion.div
           animate={{ height: [0, 64, 0], opacity: [0, 1, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="w-[2px] bg-accent" 
+          style={{ willChange: 'transform, opacity' }}
+          className="w-[2px] bg-accent"
         />
       </motion.div>
     </section>
@@ -308,8 +329,8 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-32 px-6 bg-bg-dark text-bg-light relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-accent/5 blur-[120px] rounded-full" />
+    <section id="about" className="py-20 px-6 bg-bg-dark text-bg-light relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-accent/5 blur-[90px] rounded-full" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
@@ -328,7 +349,7 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
-              className="text-4xl md:text-6xl font-bold tracking-tighter mb-10 text-bg-light"
+              className="text-4xl md:text-6xl font-bold tracking-tighter mb-8 text-bg-light"
             >
               FROM IDEA TO<br />SHIPPED PRODUCT
             </motion.h2>
@@ -359,7 +380,7 @@ const About = () => {
           </div>
 
           {/* Right: stat cards */}
-          <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6 lg:pt-32">
+          <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6 lg:pt-20">
             {stats.map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -412,15 +433,16 @@ const Experience = () => {
   ];
 
   return (
-    <section id="experience" className="py-40 px-6 bg-bg-dark text-bg-light relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-accent/5 blur-[150px] rounded-full" />
+    <section id="experience" className="py-24 px-6 bg-bg-dark text-bg-light relative overflow-hidden">
+      {/* Smaller, softer, and centered so it can't unevenly bleed through one card more than the other */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[250px] bg-accent/[0.04] blur-[100px] rounded-full" />
 
       <div className="max-w-5xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-20 text-center"
+          className="mb-14 text-center"
         >
           <span className="text-accent font-bold tracking-[0.4em] uppercase text-xs mb-4 block">Work History</span>
           <h2 className="text-5xl md:text-7xl font-bold tracking-tighter">EXPERIENCE</h2>
@@ -434,7 +456,9 @@ const Experience = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.7, delay: i * 0.1 }}
-              className="bg-white/5 border border-white/10 rounded-[2.5rem] p-8 lg:p-12 hover:border-accent/40 transition-all duration-500"
+              // backdrop-blur normalizes whatever color sits behind each card,
+              // so both cards read the same regardless of glow overlap
+              className="bg-white/[0.06] backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 lg:p-12 hover:border-accent/40 transition-colors duration-500"
             >
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-8">
                 <div className="flex items-start gap-4">
@@ -449,15 +473,16 @@ const Experience = () => {
                     </p>
                   </div>
                 </div>
-                <a
-                  href={job.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest border border-white/10 px-5 py-3 rounded-full bg-white/5 hover:border-accent hover:text-accent transition-all shrink-0 self-start md:self-auto"
-                >
-                  Visit Site
-                  <ExternalLink size={12} />
-                </a>
+                
+               <a
+  href={job.link}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest border border-white/10 px-5 py-3 rounded-full bg-white/5 hover:border-accent hover:text-accent transition-all shrink-0 self-start md:self-auto"
+>
+  Visit Site
+  <ExternalLink size={12} />
+</a>
               </div>
 
               <ul className="flex flex-col gap-4">
@@ -517,13 +542,13 @@ const Projects = () => {
   ];
 
   return (
-    <section id="projects" className="bg-bg-dark text-bg-light py-40 px-6 relative">
+    <section id="projects" className="bg-bg-dark text-bg-light py-24 px-6 relative">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-32 flex flex-col md:flex-row md:items-end justify-between gap-8"
+          className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8"
         >
           <div>
             <span className="text-accent font-bold tracking-[0.4em] uppercase text-xs mb-4 block">Case Studies</span>
@@ -534,13 +559,13 @@ const Projects = () => {
           </p>
         </motion.div>
 
-        <div className="flex flex-col gap-48">
+        <div className="flex flex-col gap-28">
           {projects.map((project, i) => (
-            <motion.div 
+            <motion.div
               key={project.id}
-              initial={{ opacity: 0, y: 100 }}
+              initial={{ opacity: 0, y: 60 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
               viewport={{ once: true, margin: "-100px" }}
               className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-center"
             >
@@ -550,7 +575,7 @@ const Projects = () => {
                   <span className="text-4xl lg:text-5xl font-bold text-white/5">&lt;{project.id}&gt;</span>
                   <div className="h-[1px] flex-grow bg-white/10" />
                 </div>
-                
+
                 <h3 className="text-3xl lg:text-5xl font-bold mb-2 lg:mb-4">{project.title}</h3>
                 <p className="text-accent font-bold tracking-widest uppercase text-xs mb-6 lg:mb-8">{project.subtitle}</p>
 
@@ -579,7 +604,7 @@ const Projects = () => {
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2 lg:gap-3 mb-8 lg:mb-12">
+                <div className="flex flex-wrap gap-2 lg:gap-3 mb-8 lg:mb-10">
                   {project.tech.map(t => (
                     <span key={t} className="text-[10px] font-bold uppercase tracking-widest border border-white/10 px-4 py-2 rounded-full bg-white/5">
                       {t}
@@ -587,11 +612,11 @@ const Projects = () => {
                   ))}
                 </div>
 
-                <motion.a 
+                <motion.a
                   whileHover={{ x: 10 }}
-                  href={project.link} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-4 group"
                 >
                   <span className="font-bold text-sm uppercase tracking-[0.2em] group-hover:text-accent transition-colors">View Project</span>
@@ -601,17 +626,17 @@ const Projects = () => {
                 </motion.a>
               </div>
 
-              {/* Animation Content - Side-by-side on mobile using a nested grid or flex */}
+              {/* Animation Content — only animates while in/near view */}
               <div className={`lg:col-span-7 relative group order-1 ${i % 2 !== 0 ? 'lg:order-1' : 'lg:order-2'}`}>
-                <motion.div 
+                <motion.div
                   whileHover={{ scale: 0.98 }}
                   transition={{ duration: 0.6 }}
                   className="overflow-hidden rounded-[2rem] border border-white/5 glow-hover transition-all duration-700 aspect-[4/3] relative bg-white/5"
                 >
-                  {project.animation}
+                  <LazyMount>{project.animation}</LazyMount>
                   <div className="absolute inset-0 bg-gradient-to-t from-bg-dark/80 via-transparent to-transparent opacity-60 pointer-events-none" />
                 </motion.div>
-                
+
                 <div className="absolute -top-6 -right-6 bg-accent text-bg-dark p-6 rounded-2xl font-bold text-xs uppercase tracking-widest shadow-2xl hidden lg:block rotate-6 group-hover:rotate-0 transition-transform duration-500">
                   {project.role}
                 </div>
@@ -653,10 +678,10 @@ const Skills = () => {
   ];
 
   return (
-    <section id="skills" className="py-40 px-6 bg-bg-dark text-bg-light relative">
+    <section id="skills" className="py-24 px-6 bg-bg-dark text-bg-light relative">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-20">
-          <motion.span 
+        <div className="text-center mb-14">
+          <motion.span
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             className="text-xs font-bold tracking-[0.5em] text-secondary uppercase mb-4 block"
@@ -703,27 +728,27 @@ const Skills = () => {
 
 const GitHubHighlights = () => {
   return (
-    <section id="github" className="py-40 px-6 bg-bg-dark">
+    <section id="github" className="py-24 px-6 bg-bg-dark">
       <div className="max-w-7xl mx-auto">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.97 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.7 }}
           viewport={{ once: true }}
-          className="bg-white/5 border border-white/10 text-bg-light rounded-[4rem] p-12 md:p-24 relative overflow-hidden shadow-2xl"
+          className="bg-white/5 border border-white/10 text-bg-light rounded-[4rem] p-12 md:p-20 relative overflow-hidden shadow-2xl"
         >
           <div className="relative z-10 flex flex-col lg:flex-row justify-between items-center gap-16">
             <div className="max-w-2xl text-center lg:text-left">
               <span className="text-accent font-bold tracking-[0.4em] uppercase text-xs mb-6 block">Open Source</span>
               <h2 className="text-5xl md:text-7xl font-bold tracking-tighter mb-8 leading-tight">BUILDING IN <br />THE PUBLIC</h2>
-              <p className="text-secondary text-xl mb-12 leading-relaxed">
+              <p className="text-secondary text-xl mb-10 leading-relaxed">
                 I believe in sharing knowledge and building tools that help others. Explore my repositories for MERN stack boilerplate, AI integrations, and experimental UI components.
               </p>
-              <motion.a 
+              <motion.a
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                href="https://github.com/Samad123-byte" 
-                target="_blank" 
+                href="https://github.com/Samad123-byte"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-4 bg-accent text-bg-dark px-12 py-6 rounded-full font-bold text-sm uppercase tracking-widest shadow-xl shadow-accent/20"
               >
@@ -731,7 +756,7 @@ const GitHubHighlights = () => {
                 Follow on GitHub
               </motion.a>
             </div>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto">
               {[
                 { name: 'map-my-trip', desc: 'Full-stack travel booking platform with AI-powered assistance.', lang: 'JavaScript' },
@@ -739,8 +764,8 @@ const GitHubHighlights = () => {
                 { name: 'NASA-app', desc: "Data-driven space exploration interface utilizing NASA's public APIs.", lang: 'JavaScript' },
                 { name: 'mern-ThinkBoard', desc: 'Real-time collaborative workspace built with the MERN stack.', lang: 'JavaScript' }
               ].map((repo) => (
-                <motion.a 
-                  key={repo.name} 
+                <motion.a
+                  key={repo.name}
                   href={`https://github.com/Samad123-byte/${repo.name}`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -757,9 +782,9 @@ const GitHubHighlights = () => {
               ))}
             </div>
           </div>
-          
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/5 blur-[150px] rounded-full -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-accent/5 blur-[120px] rounded-full translate-y-1/2 -translate-x-1/2" />
+
+          <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-accent/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute bottom-0 left-0 w-[350px] h-[350px] bg-accent/5 blur-[90px] rounded-full translate-y-1/2 -translate-x-1/2" />
         </motion.div>
       </div>
     </section>
@@ -768,33 +793,33 @@ const GitHubHighlights = () => {
 
 const Contact = () => {
   return (
-    <section id="contact" className="py-40 px-6 bg-bg-dark text-bg-light">
+    <section id="contact" className="py-24 px-6 bg-bg-dark text-bg-light">
       <div className="max-w-7xl mx-auto text-center">
-        <motion.span 
+        <motion.span
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           className="text-xs font-bold tracking-[0.5em] text-secondary uppercase mb-6 block"
         >
           Get in Touch
         </motion.span>
-       <h2 className="text-6xl md:text-9xl font-bold tracking-tighter mb-12 text-white uppercase">
+       <h2 className="text-6xl md:text-9xl font-bold tracking-tighter mb-10 text-white uppercase">
   LET'S WORK <br />
   <span className="text-white/80">TOGETHER</span>
 </h2>
-        
+
         <div className="flex flex-col md:flex-row items-center justify-center gap-12">
-          <motion.a 
+          <motion.a
             whileHover={{ scale: 1.1 }}
-            href="mailto:abdulsammadk5@gmail.com" 
+            href="mailto:abdulsammadk5@gmail.com"
             className="text-2xl md:text-4xl font-bold hover:text-accent transition-colors flex items-center gap-4"
           >
             <Mail size={40} />
             abdulsammadk5@gmail.com
           </motion.a>
           <div className="w-2 h-2 bg-accent rounded-full hidden md:block" />
-          <motion.a 
+          <motion.a
             whileHover={{ scale: 1.1 }}
-            href="https://www.linkedin.com/in/samadkhan123/" 
+            href="https://www.linkedin.com/in/samadkhan123/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-2xl md:text-4xl font-bold hover:text-accent transition-colors flex items-center gap-4"
@@ -810,7 +835,7 @@ const Contact = () => {
 
 const Footer = () => {
   return (
-    <footer className="py-20 px-6 border-t border-white/10 bg-bg-dark text-bg-light">
+    <footer className="py-16 px-6 border-t border-white/10 bg-bg-dark text-bg-light">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
         <div className="text-center md:text-left">
           <motion.p

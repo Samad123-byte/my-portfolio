@@ -51,6 +51,12 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll while mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
+
   const navLinks = [
     { name: 'About', href: '#about' },
     { name: 'Experience', href: '#experience' },
@@ -61,54 +67,70 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${scrolled ? 'bg-bg-dark/70 backdrop-blur-2xl py-4 border-b border-white/10 shadow-lg' : 'bg-transparent py-8'}`}>
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <motion.a 
-          href="#"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="text-2xl font-black tracking-tighter group flex items-center gap-2"
-        >
-          <div className="relative w-12 h-12 bg-bg-light text-bg-dark flex items-center justify-center rounded-2xl group-hover:bg-accent group-hover:text-bg-dark transition-all duration-500 group-hover:rotate-12 shadow-xl">
-            A
-            <div className="absolute -inset-1 bg-accent/20 blur-lg rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-          </div>
-          <span className="text-bg-light group-hover:text-accent transition-colors font-black tracking-tight">SAMAD</span>
-        </motion.a>
+    <>
+      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${scrolled ? 'py-4' : 'py-8'}`}>
+        {/* Background layer — backdrop-blur lives HERE, not on <nav>, so it never
+            creates a containing block for the fixed mobile menu (iOS Safari bug) */}
+        <div
+          className={`absolute inset-0 -z-10 transition-all duration-500 ${
+            scrolled
+              ? 'bg-bg-dark/70 backdrop-blur-2xl border-b border-white/10 shadow-lg'
+              : 'bg-transparent'
+          }`}
+        />
 
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-10">
-          {navLinks.map((link, i) => (
-            <motion.a
-              key={link.name}
-              href={link.href}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              className="text-[10px] font-black uppercase tracking-[0.3em] text-bg-light hover:text-accent transition-colors relative group"
-            >
-              {link.name}
-              <span className="absolute -bottom-2 left-0 w-0 h-[2px] bg-accent transition-all duration-300 group-hover:w-full" />
-            </motion.a>
-          ))}
+        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center relative">
           <motion.a
-            href="https://www.linkedin.com/in/samadkhan123/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-bg-light hover:text-accent transition-colors"
+            href="#"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="text-2xl font-black tracking-tighter group flex items-center gap-2"
           >
-            <Linkedin size={14} />
-            LinkedIn
+            <div className="relative w-12 h-12 bg-bg-light text-bg-dark flex items-center justify-center rounded-2xl group-hover:bg-accent group-hover:text-bg-dark transition-all duration-500 group-hover:rotate-12 shadow-xl">
+              A
+              <div className="absolute -inset-1 bg-accent/20 blur-lg rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+            <span className="text-bg-light group-hover:text-accent transition-colors font-black tracking-tight">SAMAD</span>
           </motion.a>
+
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-10">
+            {navLinks.map((link, i) => (
+              <motion.a
+                key={link.name}
+                href={link.href}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                className="text-[10px] font-black uppercase tracking-[0.3em] text-bg-light hover:text-accent transition-colors relative group"
+              >
+                {link.name}
+                <span className="absolute -bottom-2 left-0 w-0 h-[2px] bg-accent transition-all duration-300 group-hover:w-full" />
+              </motion.a>
+            ))}
+            <motion.a
+              href="https://www.linkedin.com/in/samadkhan123/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-bg-light hover:text-accent transition-colors"
+            >
+              <Linkedin size={14} />
+              LinkedIn
+            </motion.a>
+          </div>
+
+          {/* Mobile Toggle */}
+          <button
+            className="md:hidden p-3 bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl transition-all active:scale-90 text-bg-light"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
+      </nav>
 
-        {/* Mobile Toggle */}
-        <button className="md:hidden p-3 bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl transition-all active:scale-90 text-bg-light" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
+      {/* Mobile Menu — rendered as a SIBLING of <nav>, not nested inside it,
+          so it always positions relative to the real viewport regardless of scroll state */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -140,7 +162,7 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </>
   );
 };
 

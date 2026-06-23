@@ -1,5 +1,5 @@
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
-import { Menu, X, Github, Linkedin, Mail, FileText, ArrowUpRight, ExternalLink, Code2, Database, Layout, Terminal } from 'lucide-react';
+import { Menu, X, Github, Linkedin, Mail, ArrowUpRight, ExternalLink, Code2, Layout, Terminal, Target, Lightbulb, TrendingUp, Briefcase, CheckCircle2 } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import HireMeStats from './components/HireMeStats';
 import { MapAnimation, AIAnimation, ChatAnimation } from './components/ProjectAnimations';
@@ -52,6 +52,8 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
+    { name: 'About', href: '#about' },
+    { name: 'Experience', href: '#experience' },
     { name: 'Projects', href: '#projects' },
     { name: 'Skills', href: '#skills' },
     { name: 'GitHub', href: '#github' },
@@ -59,7 +61,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${scrolled ? 'bg-bg-light/60 backdrop-blur-2xl py-4 border-b border-white/10 shadow-lg' : 'bg-transparent py-8'}`}>
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${scrolled ? 'bg-bg-dark/70 backdrop-blur-2xl py-4 border-b border-white/10 shadow-lg' : 'bg-transparent py-8'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         <motion.a 
           href="#"
@@ -67,11 +69,11 @@ const Navbar = () => {
           animate={{ opacity: 1, x: 0 }}
           className="text-2xl font-black tracking-tighter group flex items-center gap-2"
         >
-          <div className="relative w-12 h-12 bg-primary text-bg-light flex items-center justify-center rounded-2xl group-hover:bg-accent group-hover:text-bg-dark transition-all duration-500 group-hover:rotate-12 shadow-xl">
+          <div className="relative w-12 h-12 bg-bg-light text-bg-dark flex items-center justify-center rounded-2xl group-hover:bg-accent group-hover:text-bg-dark transition-all duration-500 group-hover:rotate-12 shadow-xl">
             A
             <div className="absolute -inset-1 bg-accent/20 blur-lg rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
-          <span className="group-hover:text-accent transition-colors font-black tracking-tight">&lt;SAMAD.K /&gt;</span>
+          <span className="text-bg-light group-hover:text-accent transition-colors font-black tracking-tight">SAMAD</span>
         </motion.a>
 
         {/* Desktop Nav */}
@@ -83,7 +85,7 @@ const Navbar = () => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="text-[10px] font-black uppercase tracking-[0.3em] hover:text-accent transition-colors relative group"
+              className="text-[10px] font-black uppercase tracking-[0.3em] text-bg-light hover:text-accent transition-colors relative group"
             >
               {link.name}
               <span className="absolute -bottom-2 left-0 w-0 h-[2px] bg-accent transition-all duration-300 group-hover:w-full" />
@@ -93,7 +95,7 @@ const Navbar = () => {
             href="https://www.linkedin.com/in/samadkhan123/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] hover:text-accent transition-colors"
+            className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-bg-light hover:text-accent transition-colors"
           >
             <Linkedin size={14} />
             LinkedIn
@@ -101,7 +103,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Toggle */}
-        <button className="md:hidden p-3 bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl transition-all active:scale-90" onClick={() => setIsOpen(!isOpen)}>
+        <button className="md:hidden p-3 bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl transition-all active:scale-90 text-bg-light" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
@@ -115,9 +117,9 @@ const Navbar = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="md:hidden bg-bg-light/95 backdrop-blur-3xl fixed inset-0 z-[100] flex flex-col items-center justify-center"
+            className="md:hidden bg-bg-dark/98 backdrop-blur-3xl fixed inset-0 z-[100] flex flex-col items-center justify-center"
           >
-            <button className="absolute top-8 right-8 p-3 bg-white/10 rounded-2xl" onClick={() => setIsOpen(false)}>
+            <button className="absolute top-8 right-8 p-3 bg-white/10 rounded-2xl text-bg-light" onClick={() => setIsOpen(false)}>
               <X size={32} />
             </button>
             <div className="flex flex-col items-center gap-12">
@@ -129,7 +131,7 @@ const Navbar = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
                   onClick={() => setIsOpen(false)}
-                  className="text-5xl font-black tracking-tighter hover:text-accent transition-colors"
+                  className="text-5xl font-black tracking-tighter text-bg-light hover:text-accent transition-colors"
                 >
                   {link.name}
                 </motion.a>
@@ -166,9 +168,9 @@ const Hero = () => {
   };
 
   return (
-    <section ref={containerRef} className="min-h-screen pt-32 pb-20 px-6 flex items-center relative overflow-hidden">
+    <section ref={containerRef} className="min-h-screen pt-32 pb-20 px-6 flex items-center relative overflow-hidden bg-bg-dark">
       <div className="absolute top-1/4 -right-20 w-[600px] h-[600px] bg-accent/10 blur-[150px] rounded-full animate-pulse" />
-      <div className="absolute bottom-1/4 -left-20 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full" />
+      <div className="absolute bottom-1/4 -left-20 w-[500px] h-[500px] bg-accent/5 blur-[120px] rounded-full" />
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <motion.div style={{ y, opacity }}>
@@ -193,21 +195,21 @@ const Hero = () => {
                     variants={nameVariants}
                     initial="hidden"
                     animate="visible"
-                    className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter uppercase text-primary"
+                    className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter uppercase text-bg-light"
                   >
                     ABDUL
                   </motion.h1>
                 </div>
                 <div className="overflow-hidden w-full">
-                  <motion.h1 
-                    custom={1}
-                    variants={nameVariants}
-                    initial="hidden"
-                    animate="visible"
-                    className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter uppercase text-stroke"
-                  >
-                    SAMAD
-                  </motion.h1>
+              <motion.h1 
+  custom={1}
+  variants={nameVariants}
+  initial="hidden"
+  animate="visible"
+  className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter uppercase text-white"
+>
+  SAMAD
+</motion.h1>
                 </div>
                 <div className="overflow-hidden w-full">
                   <motion.h1 
@@ -215,7 +217,7 @@ const Hero = () => {
                     variants={nameVariants}
                     initial="hidden"
                     animate="visible"
-                    className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter uppercase text-primary"
+                    className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter uppercase text-bg-light"
                   >
                     KHAN
                   </motion.h1>
@@ -231,7 +233,7 @@ const Hero = () => {
                 className="flex flex-col gap-8"
               >
                 <p className="text-base md:text-lg text-secondary leading-relaxed font-medium max-w-md">
-                I’m a junior MERN developer passionate about creating full-stack web applications that are scalable, high-performance, and user-friendly. I love turning ideas into real projects and am eager to contribute to innovative teams.
+                 Full-stack developer working with MERN and WordPress, with backend experience from a .NET internship. Currently seeking a junior developer role to contribute to real projects and grow in a team environment.
                 </p>
                 
                 <div className="flex flex-wrap gap-4">
@@ -239,7 +241,7 @@ const Hero = () => {
                     whileHover={{ scale: 1.05, x: 5 }}
                     whileTap={{ scale: 0.95 }}
                     href="#projects" 
-                    className="bg-primary text-bg-light px-8 py-4 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-accent hover:text-bg-dark transition-all flex items-center gap-2 group shadow-xl"
+                    className="bg-accent text-bg-dark px-8 py-4 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-bg-light transition-all flex items-center gap-2 group shadow-xl shadow-accent/20"
                   >
                     View Work
                     <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
@@ -248,7 +250,7 @@ const Hero = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     href="#contact" 
-                    className="bg-white/5 backdrop-blur-xl border border-primary px-8 py-4 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-primary hover:text-bg-light transition-all"
+                    className="bg-white/5 backdrop-blur-xl border border-white/20 text-bg-light px-8 py-4 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-white/10 hover:border-accent transition-all"
                   >
                     Let's Talk
                   </motion.a>
@@ -276,13 +278,191 @@ const Hero = () => {
   );
 };
 
+const About = () => {
+  const stats = [
+    { value: '6+', label: 'Projects Shipped' },
+    { value: '10+', label: 'Technologies' },
+    { value: '2', label: 'Internships' },
+  ];
+
+  return (
+    <section id="about" className="py-32 px-6 bg-bg-dark text-bg-light relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-accent/5 blur-[120px] rounded-full" />
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+          {/* Left: heading + bio */}
+          <div className="lg:col-span-7">
+            <motion.span
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="text-xs font-bold tracking-[0.5em] text-secondary uppercase mb-4 block"
+            >
+              About Me
+            </motion.span>
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="text-4xl md:text-6xl font-bold tracking-tighter mb-10 text-bg-light"
+            >
+              FROM IDEA TO<br />SHIPPED PRODUCT
+            </motion.h2>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.15 }}
+              className="flex flex-col gap-6 text-secondary text-base lg:text-lg leading-relaxed max-w-2xl"
+            >
+              <p>
+                I'm a junior full-stack developer working across two stacks: the MERN stack (React,
+                Node.js, Express, MongoDB) for building web applications and APIs, and WordPress for
+                client websites and CMS-based projects — custom themes, plugins, ACF, and custom post
+                types. Both are real, hands-on skills I use on actual projects, not one main stack and
+                a side skill.
+              </p>
+              <p>
+                I also have backend exposure through a .NET internship, where I worked on an
+                enterprise-level system — production modules, bug fixes, and real team workflows.
+              </p>
+              <p>
+                I focus on writing maintainable, structured code and building systems that are designed to
+                last — not just prototypes.
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Right: stat cards */}
+          <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6 lg:pt-32">
+            {stats.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.15 }}
+                className="bg-white/5 border border-white/10 rounded-3xl p-6 lg:p-8 flex flex-col gap-2 hover:border-accent transition-colors"
+              >
+                <span className="text-3xl lg:text-4xl font-black tracking-tighter text-bg-light">{stat.value}</span>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-secondary">{stat.label}</span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Experience = () => {
+  const jobs = [
+    {
+      role: 'Full-Stack Developer Intern',
+      company: 'Murkez',
+      project: 'ECW Global',
+      tagline: 'Nonprofit Website',
+      link: 'https://ecw-global.org/',
+      points: [
+        'Worked on a live production website for a nonprofit organization',
+        'Built and maintained frontend features using a modern web stack',
+        'Developed and customized website sections using WordPress (themes, plugins, and page builders)',
+        'Improved UI components and overall responsiveness across devices',
+        'Collaborated with a development team on a production-level codebase'
+      ]
+    },
+    {
+      role: '.NET Developer Intern',
+      company: 'Lumensoft',
+      project: 'Nimbus RMS',
+      tagline: 'Enterprise System',
+      link: 'https://www.nimbusrms.com/',
+      points: [
+        'Contributed to the development of Nimbus RMS, an enterprise-level system',
+        'Developed backend features using ASP.NET',
+        'Worked on production modules, bug fixes, and system improvements',
+        'Gained experience in real-world software development workflows and team collaboration'
+      ]
+    }
+  ];
+
+  return (
+    <section id="experience" className="py-40 px-6 bg-bg-dark text-bg-light relative overflow-hidden">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-accent/5 blur-[150px] rounded-full" />
+
+      <div className="max-w-5xl mx-auto relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-20 text-center"
+        >
+          <span className="text-accent font-bold tracking-[0.4em] uppercase text-xs mb-4 block">Work History</span>
+          <h2 className="text-5xl md:text-7xl font-bold tracking-tighter">EXPERIENCE</h2>
+        </motion.div>
+
+        <div className="flex flex-col gap-8">
+          {jobs.map((job, i) => (
+            <motion.div
+              key={job.company}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.7, delay: i * 0.1 }}
+              className="bg-white/5 border border-white/10 rounded-[2.5rem] p-8 lg:p-12 hover:border-accent/40 transition-all duration-500"
+            >
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-8">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-accent/10 text-accent flex items-center justify-center shrink-0">
+                    <Briefcase size={20} />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl lg:text-3xl font-bold tracking-tight">{job.role}</h3>
+                    <p className="text-accent font-bold tracking-widest uppercase text-xs mt-1">{job.company}</p>
+                    <p className="text-secondary text-xs mt-2">
+                      Project: <span className="text-bg-light font-semibold">{job.project}</span> ({job.tagline})
+                    </p>
+                  </div>
+                </div>
+                <a
+                  href={job.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest border border-white/10 px-5 py-3 rounded-full bg-white/5 hover:border-accent hover:text-accent transition-all shrink-0 self-start md:self-auto"
+                >
+                  Visit Site
+                  <ExternalLink size={12} />
+                </a>
+              </div>
+
+              <ul className="flex flex-col gap-4">
+                {job.points.map((point) => (
+                  <li key={point} className="flex items-start gap-3 text-secondary text-sm lg:text-base leading-relaxed">
+                    <CheckCircle2 size={16} className="text-accent shrink-0 mt-0.5" />
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const Projects = () => {
   const projects = [
     {
       id: '01',
       title: 'Map My Trip',
       subtitle: 'Tourism in Pakistan',
-      description: "A MERN-based travel platform designed to promote tourism in Pakistan’s northern regions. It features an AI-powered chatbot that provides historical and travel guidance, multilingual support to cater to users from different countries, interactive maps using OpenStreetMap to explore locations like Hunza, Swat, and Skardu, and a customizable trip booking system where users can select tours, hotels, and transportation.",
+      problem: 'Travelers exploring Pakistan\'s northern regions had no single platform combining trip planning, local guidance, and booking — forcing them to piece together info from scattered sources.',
+      solution: 'Built a MERN travel platform with an AI chatbot for historical/travel guidance, multilingual support, interactive OpenStreetMap exploration of Hunza, Swat, and Skardu, and an end-to-end trip booking flow for tours, hotels, and transport.',
+      impact: 'A single platform that takes a traveler from discovery to booked itinerary, with AI guidance replacing the need for a human travel agent.',
       tech: ['React', 'Node.js', 'Express.js', 'MongoDB', 'Gemini AI', 'OpenStreetMap'],
       role: 'Full Stack Developer',
       animation: <MapAnimation />,
@@ -292,7 +472,9 @@ const Projects = () => {
       id: '02',
       title: 'QuickGPT',
       subtitle: 'AI-Powered Platform',
-      description: "QuickGPT is a MERN-based AI platform that provides chat, image generation, and a credit-based usage system. Users are allocated 'card hours' that allow them to interact with the AI for text or image generation. When hours run low, they can securely purchase additional credits via Stripe.",
+      problem: 'AI chat and image-generation tools are powerful but expensive to run at scale — most side projects either have no usage controls or no monetization path.',
+      solution: 'Built a MERN AI platform with chat and image generation, gated by a credit-based usage system. When a user\'s credits run low, they can purchase more through a secure Stripe checkout.',
+      impact: 'A working model for sustainably offering AI features to end users without absorbing unlimited API costs.',
       tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Stripe', 'OpenAI API', 'ImageKit'],
       role: 'Full Stack Developer',
       animation: <AIAnimation />,
@@ -302,7 +484,9 @@ const Projects = () => {
       id: '03',
       title: 'Chatsphere',
       subtitle: 'Real-Time Chat Application',
-      description: "Chatsphere is a full-stack MERN-based real-time chat application that enables users to communicate instantly with live messaging powered by Socket.io. It features real-time online/offline user status, secure authentication using JWT and cookies, and seamless image sharing through Cloudinary.",
+      problem: 'Real-time messaging needs instant delivery, accurate presence status, and secure auth — getting any one of those wrong breaks the experience.',
+      solution: 'Built a full-stack MERN chat app with live messaging via Socket.io, real-time online/offline presence, JWT + cookie authentication, and image sharing through Cloudinary.',
+      impact: 'A responsive, secure chat experience with sub-second message delivery and reliable session handling.',
       tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Socket.io', 'JWT', 'Cloudinary', 'DaisyUI'],
       role: 'Full Stack Developer',
       animation: <ChatAnimation />,
@@ -324,7 +508,7 @@ const Projects = () => {
             <h2 className="text-6xl md:text-8xl font-bold tracking-tighter">SELECTED <br />PROJECTS</h2>
           </div>
           <p className="text-secondary max-w-sm text-lg leading-relaxed">
-            A curated selection of my latest work, focusing on performance, scalability, and user experience.
+            Each project below: the problem it solves, how I built it, and the result.
           </p>
         </motion.div>
 
@@ -346,11 +530,32 @@ const Projects = () => {
                 </div>
                 
                 <h3 className="text-3xl lg:text-5xl font-bold mb-2 lg:mb-4">{project.title}</h3>
-                <p className="text-accent font-bold tracking-widest uppercase text-xs mb-4 lg:mb-8">{project.subtitle}</p>
-                
-                <p className="text-secondary text-base lg:text-lg mb-8 lg:mb-10 leading-relaxed">
-                  {project.description}
-                </p>
+                <p className="text-accent font-bold tracking-widest uppercase text-xs mb-6 lg:mb-8">{project.subtitle}</p>
+
+                {/* Problem / Solution / Impact */}
+                <div className="flex flex-col gap-5 mb-8 lg:mb-10">
+                  <div className="flex gap-3">
+                    <Target size={16} className="text-accent shrink-0 mt-1" />
+                    <p className="text-secondary text-sm lg:text-base leading-relaxed">
+                      <span className="text-bg-light font-bold uppercase tracking-wider text-[10px] mr-2">Problem</span><br />
+                      {project.problem}
+                    </p>
+                  </div>
+                  <div className="flex gap-3">
+                    <Lightbulb size={16} className="text-accent shrink-0 mt-1" />
+                    <p className="text-secondary text-sm lg:text-base leading-relaxed">
+                      <span className="text-bg-light font-bold uppercase tracking-wider text-[10px] mr-2">Solution</span><br />
+                      {project.solution}
+                    </p>
+                  </div>
+                  <div className="flex gap-3">
+                    <TrendingUp size={16} className="text-accent shrink-0 mt-1" />
+                    <p className="text-secondary text-sm lg:text-base leading-relaxed">
+                      <span className="text-bg-light font-bold uppercase tracking-wider text-[10px] mr-2">Impact</span><br />
+                      {project.impact}
+                    </p>
+                  </div>
+                </div>
 
                 <div className="flex flex-wrap gap-2 lg:gap-3 mb-8 lg:mb-12">
                   {project.tech.map(t => (
@@ -400,31 +605,35 @@ const Projects = () => {
 const Skills = () => {
   const categories = [
     {
-      title: 'Frontend',
+      title: 'Full-Stack Development',
       icon: <Layout size={24} />,
-      skills: ['React', 'JavaScript', 'Tailwind CSS', 'daisyUI']
+      skills: ['React', 'Node.js', 'Express', 'MongoDB', 'REST APIs'],
+      note: 'Building full web applications and APIs'
     },
     {
-      title: 'Backend',
+      title: 'WordPress Development',
+      icon: <Code2 size={24} />,
+      skills: ['Custom Themes', 'Plugins', 'Elementor Pro', 'ACF', 'CPT UI'],
+      note: 'Client websites and CMS-based solutions'
+    },
+    {
+      title: 'Backend & Exposure',
       icon: <Terminal size={24} />,
-      skills: ['Node.js', 'Express', '.NET', 'REST APIs', 'Auth Systems']
-    },
-    {
-      title: 'Database',
-      icon: <Database size={24} />,
-      skills: ['MongoDB', 'PostgreSQL']
+      skills: ['ASP.NET', 'Enterprise Modules', 'Bug Fixing'],
+      note: 'Internship experience in production systems'
     },
     {
       title: 'Tools',
-      icon: <Code2 size={24} />,
-      skills: ['Git', 'Docker', 'Postman', 'VS Code', 'Vercel']
+      icon: <Terminal size={24} />,
+      skills: ['Git', 'Docker', 'Postman', 'VS Code', 'Vercel'],
+      note: 'Day-to-day development workflow'
     }
   ];
 
   return (
-    <section id="skills" className="py-40 px-6 bg-bg-light relative">
+    <section id="skills" className="py-40 px-6 bg-bg-dark text-bg-light relative">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-24">
+        <div className="text-center mb-20">
           <motion.span 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -434,7 +643,7 @@ const Skills = () => {
           </motion.span>
           <h2 className="text-5xl md:text-7xl font-bold tracking-tighter">TECHNICAL STACK</h2>
         </div>
-        
+
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {categories.map((cat, i) => (
             <motion.div
@@ -443,20 +652,22 @@ const Skills = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1, duration: 0.6 }}
               viewport={{ once: true }}
-              className="bg-white p-10 rounded-[2.5rem] border border-border hover:border-accent transition-all duration-500 group relative overflow-hidden"
+              className="bg-white/5 p-8 lg:p-10 rounded-[2.5rem] border border-white/10 hover:border-accent transition-all duration-500 group relative overflow-hidden flex flex-col"
             >
-              <div className="absolute top-0 right-0 p-8 text-border group-hover:text-accent/20 transition-colors duration-500">
+              <div className="absolute top-0 right-0 p-8 text-white/10 group-hover:text-accent/30 transition-colors duration-500">
                 {cat.icon}
               </div>
-              
-              <h3 className="text-sm uppercase tracking-[0.3em] font-bold text-secondary mb-10 group-hover:text-primary transition-colors">
+
+              <h3 className="text-base lg:text-lg font-bold tracking-tight mb-1 group-hover:text-accent transition-colors">
                 {cat.title}
               </h3>
-              <div className="flex flex-col gap-5">
+              <p className="text-secondary text-xs leading-relaxed mb-8">{cat.note}</p>
+
+              <div className="flex flex-col gap-4 mt-auto">
                 {cat.skills.map(skill => (
-                  <div key={skill} className="flex items-center gap-4 group/item">
-                    <div className="w-2 h-2 bg-border group-hover/item:bg-accent rounded-full transition-colors" />
-                    <span className="font-bold text-sm tracking-tight">{skill}</span>
+                  <div key={skill} className="flex items-center gap-3 group/item">
+                    <div className="w-2 h-2 bg-white/20 group-hover/item:bg-accent rounded-full transition-colors shrink-0" />
+                    <span className="font-bold text-sm tracking-tight text-bg-light">{skill}</span>
                   </div>
                 ))}
               </div>
@@ -470,14 +681,14 @@ const Skills = () => {
 
 const GitHubHighlights = () => {
   return (
-    <section id="github" className="py-40 px-6 bg-bg-light">
+    <section id="github" className="py-40 px-6 bg-bg-dark">
       <div className="max-w-7xl mx-auto">
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="bg-bg-dark text-bg-light rounded-[4rem] p-12 md:p-24 relative overflow-hidden shadow-2xl"
+          className="bg-white/5 border border-white/10 text-bg-light rounded-[4rem] p-12 md:p-24 relative overflow-hidden shadow-2xl"
         >
           <div className="relative z-10 flex flex-col lg:flex-row justify-between items-center gap-16">
             <div className="max-w-2xl text-center lg:text-left">
@@ -535,7 +746,7 @@ const GitHubHighlights = () => {
 
 const Contact = () => {
   return (
-    <section id="contact" className="py-40 px-6 bg-bg-light">
+    <section id="contact" className="py-40 px-6 bg-bg-dark text-bg-light">
       <div className="max-w-7xl mx-auto text-center">
         <motion.span 
           initial={{ opacity: 0 }}
@@ -544,7 +755,10 @@ const Contact = () => {
         >
           Get in Touch
         </motion.span>
-        <h2 className="text-6xl md:text-9xl font-bold tracking-tighter mb-12">LET'S WORK <br /><span className="text-stroke">TOGETHER</span></h2>
+       <h2 className="text-6xl md:text-9xl font-bold tracking-tighter mb-12 text-white uppercase">
+  LET'S WORK <br />
+  <span className="text-white/80">TOGETHER</span>
+</h2>
         
         <div className="flex flex-col md:flex-row items-center justify-center gap-12">
           <motion.a 
@@ -574,7 +788,7 @@ const Contact = () => {
 
 const Footer = () => {
   return (
-    <footer className="py-20 px-6 border-t border-border bg-bg-dark text-bg-light">
+    <footer className="py-20 px-6 border-t border-white/10 bg-bg-dark text-bg-light">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
         <div className="text-center md:text-left">
           <motion.p
@@ -621,11 +835,13 @@ const Footer = () => {
 
 export default function App() {
   return (
-    <div className="overflow-x-hidden selection:bg-accent selection:text-bg-dark bg-bg-light text-bg-dark font-sans">
+    <div className="overflow-x-hidden selection:bg-accent selection:text-bg-dark bg-bg-dark text-bg-light font-sans">
       <div className="noise" />
       <CustomCursor />
       <Navbar />
       <Hero />
+      <About />
+      <Experience />
       <Projects />
       <Skills />
       <GitHubHighlights />

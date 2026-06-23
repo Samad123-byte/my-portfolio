@@ -20,26 +20,31 @@ const HireMeStats = () => {
           Why You Should Hire Me
         </motion.h2>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-secondary text-lg leading-relaxed max-w-3xl"
+          className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl text-left"
         >
-          I am a highly motivated Junior MERN Developer who turns ideas into scalable, user-friendly web applications. 
-          I have built multiple full-stack projects using React, Node.js, Express, and MongoDB, showcasing my ability 
-          to handle both frontend and backend development seamlessly. My passion for AI in web apps and modern technologies drives me to continuously learn and improve.
-        </motion.p>
-
-        <motion.p
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-secondary text-lg leading-relaxed max-w-3xl"
-        >
-          I am eager to contribute to real-world projects, collaborate with teams, and deliver high-quality results. 
-          Hiring me means gaining a developer who is adaptable, reliable, and fully committed to creating excellent products.
-        </motion.p>
+          <div className="flex flex-col gap-2">
+            <span className="text-accent text-xs font-bold uppercase tracking-widest">End to End</span>
+            <p className="text-secondary text-sm leading-relaxed">
+             I build full-stack web applications using MERN stack and WordPress, handling both frontend and backend development.
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <span className="text-accent text-xs font-bold uppercase tracking-widest">AI-Curious</span>
+            <p className="text-secondary text-sm leading-relaxed">
+              I explore and integrate AI features in web applications, focusing on practical use cases.
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <span className="text-accent text-xs font-bold uppercase tracking-widest">Team-Ready</span>
+            <p className="text-secondary text-sm leading-relaxed">
+              I can work in team environments, follow production workflows, and contribute to real projects.
+            </p>
+          </div>
+        </motion.div>
 
         {/* Buttons */}
         <motion.div

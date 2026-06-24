@@ -180,7 +180,7 @@ export const ChatAnimation = () => {
           className="self-start bg-white/10 backdrop-blur-md p-4 rounded-2xl rounded-tl-none max-w-[85%] border border-white/10 shadow-xl"
         >
           <p className="text-white/90 text-sm font-medium">
-            Hey! Have you checked out my portfolio yet? 🚀
+       We're looking for a developer who can contribute to real-world products.
           </p>
         </motion.div>
 
@@ -192,7 +192,7 @@ export const ChatAnimation = () => {
           className="self-end bg-accent/20 backdrop-blur-md p-4 rounded-2xl rounded-tr-none max-w-[85%] border border-accent/20 shadow-xl"
         >
           <p className="text-accent text-sm font-medium">
-            Yes! I love the projects and animations—it looks really professional! ✨
+          I build full-stack web applications using MERN and WordPress, with experience working on production systems.
           </p>
         </motion.div>
 
@@ -204,7 +204,7 @@ export const ChatAnimation = () => {
           className="self-start bg-white/10 backdrop-blur-md p-4 rounded-2xl rounded-tl-none max-w-[85%] border border-white/10 shadow-xl"
         >
           <p className="text-white/90 text-sm font-medium">
-            I specialize in building MERN stack apps with React, Node.js & MongoDB. 💻
+           What kind of projects have you worked on?
           </p>
         </motion.div>
 
@@ -216,7 +216,7 @@ export const ChatAnimation = () => {
           className="self-end bg-accent/20 backdrop-blur-md p-4 rounded-2xl rounded-tr-none max-w-[85%] border border-accent/20 shadow-xl"
         >
           <p className="text-accent text-sm font-medium">
-            Passionate about turning ideas into real projects and creating user-friendly solutions!
+         I've contributed to nonprofit platforms, enterprise software, AI-powered applications, and real-time web solutions.
           </p>
         </motion.div>
       </AnimatePresence>

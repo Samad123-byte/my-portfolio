@@ -1,7 +1,17 @@
 // components/ProjectAnimations.tsx
 import { motion, AnimatePresence } from 'motion/react';
 import { useMemo } from 'react';
-import { MessageSquare, Cpu, Car, Mountain, Cloud, Trees as Tree } from 'lucide-react';
+import {
+  MessageSquare,
+  Cpu,
+  Car,
+  Mountain,
+  Cloud,
+  Trees as Tree,
+  Globe,
+  Heart,
+  Users
+} from 'lucide-react';
 
 export const MapAnimation = () => {
   return (
@@ -235,6 +245,146 @@ export const ChatAnimation = () => {
       >
         <MessageSquare size={100} strokeWidth={1} />
       </motion.div>
+    </div>
+  );
+};
+
+
+
+export const ECWAnimation = () => {
+  return (
+    <div className="relative w-full h-full bg-slate-950 overflow-hidden rounded-[2rem] flex items-center justify-center">
+
+      {/* Background Grid */}
+      <div
+        className="absolute inset-0 opacity-10"
+        style={{
+          backgroundImage:
+            'linear-gradient(#7cff6b 1px, transparent 1px), linear-gradient(90deg, #7cff6b 1px, transparent 1px)',
+          backgroundSize: '40px 40px'
+        }}
+      />
+
+      {/* Rotating Globe */}
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{
+          duration: 30,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+        className="absolute"
+      >
+        <Globe
+          size={240}
+          className="text-accent/20"
+          strokeWidth={1}
+        />
+      </motion.div>
+
+      {/* Website Card */}
+      <motion.div
+        animate={{
+          y: [0, -10, 0]
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity
+        }}
+        className="relative z-10 w-80 h-52 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden"
+      >
+        {/* Browser Header */}
+        <div className="h-10 border-b border-white/10 flex items-center px-4 gap-2">
+          <div className="w-3 h-3 rounded-full bg-red-400" />
+          <div className="w-3 h-3 rounded-full bg-yellow-400" />
+          <div className="w-3 h-3 rounded-full bg-green-400" />
+        </div>
+
+        {/* Website Content */}
+        <div className="p-5">
+          <div className="h-5 bg-accent/30 rounded w-2/3 mb-4" />
+
+          <div className="h-3 bg-white/10 rounded mb-2" />
+          <div className="h-3 bg-white/10 rounded mb-2 w-5/6" />
+          <div className="h-3 bg-white/10 rounded w-4/6" />
+
+          <motion.div
+            animate={{
+              scale: [1, 1.05, 1]
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity
+            }}
+            className="mt-6 inline-flex items-center gap-2 bg-accent text-bg-dark px-4 py-2 rounded-xl font-bold text-xs"
+          >
+            <Heart size={14} />
+            Donate
+          </motion.div>
+        </div>
+      </motion.div>
+
+      {/* Floating Cards */}
+
+      <motion.div
+        animate={{ y: [0, -15, 0] }}
+        transition={{ duration: 4, repeat: Infinity }}
+        className="absolute top-20 left-20 bg-white/5 border border-white/10 rounded-xl px-4 py-3"
+      >
+        <div className="flex items-center gap-2 text-white text-xs">
+          <Users size={14} className="text-accent" />
+          Global Impact
+        </div>
+      </motion.div>
+
+      <motion.div
+        animate={{ y: [0, -10, 0] }}
+        transition={{ duration: 5, repeat: Infinity }}
+        className="absolute bottom-24 right-20 bg-white/5 border border-white/10 rounded-xl px-4 py-3"
+      >
+        <div className="flex items-center gap-2 text-white text-xs">
+          <Heart size={14} className="text-accent" />
+          Education Support
+        </div>
+      </motion.div>
+
+      {/* Connection Lines */}
+
+      <svg className="absolute inset-0 w-full h-full">
+        <motion.line
+          x1="20%"
+          y1="30%"
+          x2="50%"
+          y2="50%"
+          stroke="#7cff6b"
+          strokeWidth="1"
+          strokeDasharray="5 5"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{
+            duration: 2,
+            repeat: Infinity
+          }}
+        />
+
+        <motion.line
+          x1="80%"
+          y1="70%"
+          x2="50%"
+          y2="50%"
+          stroke="#7cff6b"
+          strokeWidth="1"
+          strokeDasharray="5 5"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            delay: 1
+          }}
+        />
+      </svg>
+
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useScroll, useTransform, useInView, type Varia
 import { Menu, X, Github, Linkedin, Mail, ArrowUpRight, ExternalLink, Code2, Layout, Terminal, Target, Lightbulb, TrendingUp, Briefcase, CheckCircle2 } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import HireMeStats from './components/HireMeStats';
-import { MapAnimation, AIAnimation, ChatAnimation } from './components/ProjectAnimations';
+import { MapAnimation, AIAnimation, ChatAnimation, ECWAnimation } from './components/ProjectAnimations';
 
 // Mounts children only when scrolled near the viewport, and unmounts them
 // when far away — stops the heavy infinite project animations from running
@@ -503,8 +503,42 @@ const Experience = () => {
 
 const Projects = () => {
   const projects = [
+
+{
+  id: '01',
+  title: 'ECW Global',
+  subtitle: 'Global Nonprofit Platform',
+
+  problem:
+    'Global nonprofit organizations require a modern, scalable, and responsive website to effectively share their mission, resources, programs, and impact with an international audience.',
+
+  solution:
+    'Contributed to the development and maintenance of a live WordPress platform, building and customizing website sections, improving responsiveness, implementing UI enhancements, and supporting content management requirements within a professional development team.',
+
+  impact:
+    'Helped improve the user experience and maintain a production website serving a global audience while gaining hands-on experience working on real-world client projects and collaborative development workflows.',
+
+  tech: [
+    'WordPress',
+    'Avada builder',
+    'PHP',
+    'WPforms',
+    'HTML',
+    'CSS',
+    'ACF',
+  ],
+
+  buttonText: 'View Website',
+
+  role: 'Full Stack Developer',
+
+  animation: <ECWAnimation />,
+
+  link: 'https://ecw-global.org/'
+},
+
     {
-      id: '01',
+      id: '02',
       title: 'Map My Trip',
       subtitle: 'Tourism in Pakistan',
       problem: 'Travelers exploring Pakistan\'s northern regions had no single platform combining trip planning, local guidance, and booking — forcing them to piece together info from scattered sources.',
@@ -516,7 +550,7 @@ const Projects = () => {
       link: 'https://github.com/Samad123-byte/map-my-trip.git'
     },
     {
-      id: '02',
+      id: '03',
       title: 'QuickGPT',
       subtitle: 'AI-Powered Platform',
       problem: 'AI chat and image-generation tools are powerful but expensive to run at scale — most side projects either have no usage controls or no monetization path.',
@@ -528,7 +562,7 @@ const Projects = () => {
       link: 'https://github.com/Samad123-byte/QuickGPT.git'
     },
     {
-      id: '03',
+      id: '04',
       title: 'Chatsphere',
       subtitle: 'Real-Time Chat Application',
       problem: 'Real-time messaging needs instant delivery, accurate presence status, and secure auth — getting any one of those wrong breaks the experience.',
@@ -619,7 +653,9 @@ const Projects = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-4 group"
                 >
-                  <span className="font-bold text-sm uppercase tracking-[0.2em] group-hover:text-accent transition-colors">View Project</span>
+                  <span className="font-bold text-sm uppercase tracking-[0.2em] group-hover:text-accent transition-colors">
+  {project.buttonText || 'View Project'}
+</span>
                   <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:border-accent group-hover:bg-accent group-hover:text-bg-dark transition-all">
                     <ExternalLink size={18} />
                   </div>

@@ -398,20 +398,20 @@ const About = () => {
 
 const Experience = () => {
   const jobs = [
-    {
-      role: 'Full-Stack Developer Intern',
-      company: 'Murkez',
-      project: 'ECW Global',
-      tagline: 'Nonprofit Website',
-      link: 'https://ecw-global.org/',
-      points: [
-        'Worked on a live production website for a nonprofit organization',
-        'Built and maintained frontend features using a modern web stack',
-        'Developed and customized website sections using WordPress (themes, plugins, and page builders)',
-        'Improved UI components and overall responsiveness across devices',
-        'Collaborated with a development team on a production-level codebase'
-      ]
-    },
+  {
+  role: 'WordPress Developer',
+  company: 'Murkez',
+  project: 'ECW Global',
+  tagline: 'Nonprofit Website',
+  link: 'https://ecw-global.org/',
+  points: [
+    'Worked on a live production website for a nonprofit organization',
+    'Developed and customized WordPress themes, plugins, and page builder layouts',
+    'Built responsive UI sections using Elementor and Avada-based components',
+    'Improved website UI/UX and ensured mobile responsiveness across devices',
+    'Collaborated with the development team on a production-level WordPress codebase'
+  ]
+},
     {
       role: '.NET Developer Intern',
       company: 'Lumensoft',

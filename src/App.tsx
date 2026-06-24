@@ -323,9 +323,9 @@ const Hero = () => {
 
 const About = () => {
   const stats = [
-    { value: '6+', label: 'Projects Shipped' },
+    { value: '6+', label: 'Production & Personal Projects' },
     { value: '10+', label: 'Technologies' },
-    { value: '2', label: 'Internships' },
+    { value: '2', label: 'Industry Internships' },
   ];
 
   return (
@@ -351,7 +351,7 @@ const About = () => {
               transition={{ duration: 0.7 }}
               className="text-4xl md:text-6xl font-bold tracking-tighter mb-8 text-bg-light"
             >
-              FROM IDEA TO<br />SHIPPED PRODUCT
+             FROM CONCEPT TO<br />PRODUCTION
             </motion.h2>
 
             <motion.div
@@ -362,19 +362,14 @@ const About = () => {
               className="flex flex-col gap-6 text-secondary text-base lg:text-lg leading-relaxed max-w-2xl"
             >
               <p>
-                I'm a junior full-stack developer working across two stacks: the MERN stack (React,
-                Node.js, Express, MongoDB) for building web applications and APIs, and WordPress for
-                client websites and CMS-based projects — custom themes, plugins, ACF, and custom post
-                types. Both are real, hands-on skills I use on actual projects, not one main stack and
-                a side skill.
+              I'm a full-stack developer working across both MERN and WordPress ecosystems. I build modern web applications using React, Node.js, Express, and MongoDB, while also developing CMS-driven solutions with WordPress, including custom themes, plugins, Advanced Custom Fields (ACF), and custom post types.
+              My experience includes contributing to live production websites and enterprise software through professional internships, where I worked on feature development, bug fixes, performance improvements, and team-based development workflows.
               </p>
               <p>
-                I also have backend exposure through a .NET internship, where I worked on an
-                enterprise-level system — production modules, bug fixes, and real team workflows.
+              I enjoy building scalable, maintainable solutions that solve real-world problems from AI-powered platforms and real-time applications to business and nonprofit websites
               </p>
               <p>
-                I focus on writing maintainable, structured code and building systems that are designed to
-                last — not just prototypes.
+               My focus is on writing clean, reliable code and delivering products that provide long-term value, not just proof-of-concept projects.
               </p>
             </motion.div>
           </div>

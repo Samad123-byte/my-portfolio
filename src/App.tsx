@@ -793,7 +793,7 @@ const GitHubHighlights = () => {
                 { name: 'map-my-trip', desc: 'Full-stack travel booking platform with AI-powered assistance.', lang: 'JavaScript' },
                 { name: 'QuickGPT', desc: 'Advanced AI interaction suite featuring chat and image generation.', lang: 'JavaScript' },
                 { name: 'NASA-app', desc: "Data-driven space exploration interface utilizing NASA's public APIs.", lang: 'JavaScript' },
-                { name: 'mern-ThinkBoard', desc: 'Real-time collaborative workspace built with the MERN stack.', lang: 'JavaScript' }
+                { name: 'mern-ThinkBoard', desc: 'A simple and modern note-taking application built using the MERN stack.', lang: 'JavaScript' }
               ].map((repo) => (
                 <motion.a
                   key={repo.name}

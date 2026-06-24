@@ -275,7 +275,7 @@ const Hero = () => {
                 className="flex flex-col gap-8"
               >
                 <p className="text-base md:text-lg text-secondary leading-relaxed font-medium max-w-md">
-                 Full-stack developer working with MERN and WordPress, with backend experience from a .NET internship. Currently seeking a junior developer role to contribute to real projects and grow in a team environment.
+                Full-stack developer specializing in MERN and WordPress, with experience contributing to production websites, enterprise systems, and scalable web applications.
                 </p>
 
                 <div className="flex flex-wrap gap-4">

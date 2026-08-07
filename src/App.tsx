@@ -1,9 +1,17 @@
 // App.tsx
 import { motion, AnimatePresence, useScroll, useTransform, useInView, type Variants } from 'motion/react';
-import { Menu, X, Github, Linkedin, Mail, ArrowUpRight, ExternalLink, Code2, Layout, Terminal, Target, Lightbulb, TrendingUp, Briefcase, CheckCircle2 } from 'lucide-react';
+import { Menu, X, Github, Linkedin, Mail, ArrowUpRight, ExternalLink, Code2, Layout, Terminal, Target, Lightbulb, TrendingUp, Briefcase, CheckCircle2, Check } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import HireMeStats from './components/HireMeStats';
-import { MapAnimation, AIAnimation, ChatAnimation, ECWAnimation } from './components/ProjectAnimations';
+import {
+  MapAnimation,
+  AIAnimation,
+  ChatAnimation,
+  ECWAnimation,
+  LiftLogAnimation,
+  CineStreamAnimation,
+  PrimeNestAnimation,
+} from './components/ProjectAnimations';
 
 // Mounts children only when scrolled near the viewport, and unmounts them
 // when far away — stops the heavy infinite project animations from running
@@ -498,76 +506,201 @@ const Experience = () => {
 
 const Projects = () => {
   const projects = [
-
-{
-  id: '01',
-  title: 'ECW Global',
-  subtitle: 'Global Nonprofit Platform',
-
-  problem:
-    'Global nonprofit organizations require a modern, scalable, and responsive website to effectively share their mission, resources, programs, and impact with an international audience.',
-
-  solution:
-    'Contributed to the development and maintenance of a live WordPress platform, building and customizing website sections, improving responsiveness, implementing UI enhancements, and supporting content management requirements within a professional development team.',
-
-  impact:
-    'Helped improve the user experience and maintain a production website serving a global audience while gaining hands-on experience working on real-world client projects and collaborative development workflows.',
-
-  tech: [
-    'WordPress',
-    'Avada builder',
-    'PHP',
-    'WPforms',
-    'HTML',
-    'CSS',
-    'ACF',
-  ],
-
-  buttonText: 'View Website',
-
-  role: 'Full Stack Developer',
-
-  animation: <ECWAnimation />,
-
-  link: 'https://ecw-global.org/'
-},
-
+    {
+      id: '01',
+      title: 'LiftLog',
+      subtitle: 'Fitness Tracking Application',
+      challenge:
+        'Fitness enthusiasts need a way to plan, track, and progress their workouts, while gyms need a simple way to manage their exercise library — most tools solve only one side of that.',
+      highlights: [
+        'Personalized Workout Plans',
+        'Workout Session Tracking',
+        'Automatic Stats Calculation',
+        'Personal Records per Exercise',
+        'Admin Dashboard for Exercise Library',
+      ],
+      result:
+        'A fitness tracker flexible enough for everyday users and structured enough for gym management use.',
+      metrics: [
+        { label: 'Role', value: 'Full Stack Dev' },
+        { label: 'Type', value: 'Personal Project' },
+        { label: 'Status', value: 'Completed' },
+        { label: 'Stack', value: 'MERN' },
+      ],
+      tech: ['React', 'Node.js', 'Express', 'MongoDB'],
+      role: 'Full Stack Developer',
+      animation: <LiftLogAnimation />,
+      links: [
+        { label: 'View Live Site', url: 'https://lift-log-omega-rouge.vercel.app/' },
+        { label: 'View Code', url: 'https://github.com/Samad123-byte/LiftLog.git' },
+      ],
+    },
     {
       id: '02',
-      title: 'Map My Trip',
-      subtitle: 'Tourism in Pakistan',
-      problem: 'Travelers exploring Pakistan\'s northern regions had no single platform combining trip planning, local guidance, and booking — forcing them to piece together info from scattered sources.',
-      solution: 'Built a MERN travel platform with an AI chatbot for historical/travel guidance, multilingual support, interactive OpenStreetMap exploration of Hunza, Swat, and Skardu, and an end-to-end trip booking flow for tours, hotels, and transport.',
-      impact: 'A single platform that takes a traveler from discovery to booked itinerary, with AI guidance replacing the need for a human travel agent.',
-      tech: ['React', 'Node.js', 'Express.js', 'MongoDB', 'Gemini AI', 'OpenStreetMap'],
+      title: 'CineStream',
+      subtitle: 'Movie Discovery Platform',
+      challenge:
+        "Movie discovery is scattered across rating sites, streaming apps, and forums — there's no single place to browse, track, and get recommendations tailored to what you actually watch.",
+      highlights: [
+        'Trending & Search Across Thousands of Titles',
+        'Personal Watchlist & Favorites',
+        'Official Trailers',
+        'User Reviews',
+        'AI-Powered Recommendations',
+      ],
+      result:
+        'A single, responsive platform that combines movie discovery, personal tracking, and AI-driven suggestions.',
+      metrics: [
+        { label: 'Role', value: 'Full Stack Dev' },
+        { label: 'Type', value: 'Personal Project' },
+        { label: 'Status', value: 'Completed' },
+        { label: 'Stack', value: 'MERN + AI' },
+      ],
+      tech: ['React', 'Node.js', 'Express', 'MongoDB', 'AI Recommendations'],
       role: 'Full Stack Developer',
-      animation: <MapAnimation />,
-      link: 'https://github.com/Samad123-byte/map-my-trip.git'
+      animation: <CineStreamAnimation />,
+      links: [
+        { label: 'View Live Site', url: 'https://cine-stream-pi-two.vercel.app/' },
+        { label: 'View Code', url: 'https://github.com/Samad123-byte/CineStream.git' },
+      ],
     },
     {
       id: '03',
-      title: 'QuickGPT',
-      subtitle: 'AI-Powered Platform',
-      problem: 'AI chat and image-generation tools are powerful but expensive to run at scale — most side projects either have no usage controls or no monetization path.',
-      solution: 'Built a MERN AI platform with chat and image generation, gated by a credit-based usage system. When a user\'s credits run low, they can purchase more through a secure Stripe checkout.',
-      impact: 'A working model for sustainably offering AI features to end users without absorbing unlimited API costs.',
-      tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Stripe', 'OpenAI API', 'ImageKit'],
+      title: 'Map My Trip',
+      subtitle: 'Tourism in Pakistan',
+      challenge:
+        "Travelers exploring Pakistan's northern regions had no single platform combining trip planning, local guidance, and booking — forcing them to piece together info from scattered sources.",
+      highlights: [
+        'AI Travel Assistant',
+        'Interactive OpenStreetMap Exploration',
+        'User Reviews',
+        'Secure Authentication',
+        'End-to-End Booking Flow',
+        'Multi-language Support',
+      ],
+      result:
+        'A single platform that takes a traveler from discovery to booked itinerary, with AI guidance replacing the need for a human travel agent.',
+      metrics: [
+        { label: 'Role', value: 'Full Stack Dev' },
+        { label: 'Type', value: 'Personal Project' },
+        { label: 'Status', value: 'Completed' },
+        { label: 'Stack', value: 'MERN + Gemini AI' },
+      ],
+      tech: ['React', 'Node.js', 'Express.js', 'MongoDB', 'Gemini AI', 'OpenStreetMap'],
       role: 'Full Stack Developer',
-      animation: <AIAnimation />,
-      link: 'https://github.com/Samad123-byte/QuickGPT.git'
+      animation: <MapAnimation />,
+      links: [
+ { label: 'View Live Site', url: 'https://map-my-trip-chi.vercel.app/' },
+ { label: 'View Code', url: 'https://github.com/Samad123-byte/map-my-trip.git' },
+
+      ],
+       
     },
     {
       id: '04',
+      title: 'ECW Global',
+      subtitle: 'Global Nonprofit Platform',
+      challenge:
+        "Global nonprofit organizations need a modern, scalable, responsive website to share their mission, resources, programs, and impact with an international audience.",
+      highlights: [
+        'Customized WordPress theme & Avada page-builder layouts',
+        'Implemented ACF fields for flexible content sections',
+        'Built responsive UI components across devices',
+        'Improved page performance and load times',
+      ],
+      result:
+        'Live production website serving a global nonprofit audience, built and maintained within a professional development team.',
+      metrics: [
+        { label: 'Role', value: 'Full Stack Dev' },
+        { label: 'Type', value: 'Client Project' },
+        { label: 'Status', value: 'Live' },
+        { label: 'Stack', value: 'WordPress' },
+      ],
+      tech: ['WordPress', 'Avada builder', 'PHP', 'WPforms', 'HTML', 'CSS', 'ACF'],
+      role: 'Full Stack Developer',
+      animation: <ECWAnimation />,
+      links: [{ label: 'View Website', url: 'https://ecw-global.org/' }],
+    },
+    {
+      id: '05',
+      title: 'PrimeNest Realty',
+      subtitle: 'Custom WordPress Real Estate Theme',
+      challenge:
+        'Real estate businesses need a custom, scalable website to showcase property listings — without being locked into a generic page-builder template.',
+      highlights: [
+        'Custom Post Types for Property Listings',
+        'Custom Meta Boxes for Listing Data',
+        'Responsive, Reusable Theme Templates',
+        'Property Galleries',
+        'Admin-Friendly Listing Management',
+      ],
+      result:
+        'A modern, production-ready real estate website with a scalable theme structure — built entirely with core WordPress development practices, no page builders.',
+      metrics: [
+        { label: 'Role', value: 'WordPress Dev' },
+        { label: 'Type', value: 'Personal Project' },
+        { label: 'Status', value: 'Live' },
+        { label: 'Stack', value: 'WordPress (Custom)' },
+      ],
+      tech: ['WordPress', 'PHP', 'Custom Post Types', 'ACF', 'HTML', 'CSS'],
+      role: 'WordPress Developer',
+      animation: <PrimeNestAnimation />,
+      links: [{ label: 'View Live Site', url: 'https://primenest-realty.kesug.com/' }],
+    },
+    {
+      id: '06',
       title: 'Chatsphere',
       subtitle: 'Real-Time Chat Application',
-      problem: 'Real-time messaging needs instant delivery, accurate presence status, and secure auth — getting any one of those wrong breaks the experience.',
-      solution: 'Built a full-stack MERN chat app with live messaging via Socket.io, real-time online/offline presence, JWT + cookie authentication, and image sharing through Cloudinary.',
-      impact: 'A responsive, secure chat experience with sub-second message delivery and reliable session handling.',
+      challenge:
+        'Real-time messaging needs instant delivery, accurate presence status, and secure auth — getting any one of those wrong breaks the experience.',
+      highlights: [
+        'Real-Time Messaging via Socket.io',
+        'Live Online / Offline Presence',
+        'JWT + Cookie Authentication',
+        'Image Sharing via Cloudinary',
+      ],
+      result:
+        'A responsive, secure chat experience with sub-second message delivery and reliable session handling.',
+      metrics: [
+        { label: 'Role', value: 'Full Stack Dev' },
+        { label: 'Type', value: 'Personal Project' },
+        { label: 'Status', value: 'Completed' },
+        { label: 'Stack', value: 'MERN + Socket.io' },
+      ],
       tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Socket.io', 'JWT', 'Cloudinary', 'DaisyUI'],
       role: 'Full Stack Developer',
       animation: <ChatAnimation />,
-      link: 'https://github.com/Samad123-byte/ChatSphere.git'
-    }
+      links: [  { label: 'View Live Site', url: 'https://chatsphere-frontend-theta.vercel.app/' },
+        
+        { label: 'View Code', url: 'https://github.com/Samad123-byte/ChatSphere.git' }],
+    },
+    {
+      id: '07',
+      title: 'QuickGPT',
+      subtitle: 'AI-Powered Platform',
+      challenge:
+        'AI chat and image-generation tools are powerful but expensive to run at scale — most side projects either have no usage controls or no monetization path.',
+      highlights: [
+        'AI Chat Assistant',
+        'AI Image Generation',
+        'Credit-Based Usage System',
+        'Stripe Checkout Integration',
+        'Secure Authentication',
+        'Responsive UI',
+      ],
+      result:
+        'A working model for sustainably offering AI features to end users without absorbing unlimited API costs.',
+      metrics: [
+        { label: 'Role', value: 'Full Stack Dev' },
+        { label: 'Type', value: 'Personal Project' },
+        { label: 'Status', value: 'Completed' },
+        { label: 'Stack', value: 'MERN + OpenAI' },
+      ],
+      tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Stripe', 'OpenAI API', 'ImageKit'],
+      role: 'Full Stack Developer',
+      animation: <AIAnimation />,
+      links: [{ label: 'View Code', url: 'https://github.com/Samad123-byte/QuickGPT.git' }],
+    },
   ];
 
   return (
@@ -584,92 +717,127 @@ const Projects = () => {
             <h2 className="text-6xl md:text-8xl font-bold tracking-tighter">SELECTED <br />PROJECTS</h2>
           </div>
           <p className="text-secondary max-w-sm text-lg leading-relaxed">
-            Each project below: the problem it solves, how I built it, and the result.
+            Each project below: the challenge it solves, what I built, and the result.
           </p>
         </motion.div>
 
-        <div className="flex flex-col gap-28">
+        <div className="flex flex-col gap-16">
           {projects.map((project, i) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 60 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-center"
+              viewport={{ once: true, margin: '-100px' }}
+              className="border border-white/10 rounded-[2.5rem] overflow-hidden bg-white/[0.02] hover:border-white/20 transition-colors duration-500"
             >
-              {/* Text Content */}
-              <div className={`lg:col-span-5 order-2 ${i % 2 !== 0 ? 'lg:order-2' : 'lg:order-1'}`}>
-                <div className="flex items-center gap-4 mb-6 lg:mb-8">
-                  <span className="text-4xl lg:text-5xl font-bold text-white/5">&lt;{project.id}&gt;</span>
-                  <div className="h-[1px] flex-grow bg-white/10" />
+              {/* Large Image / Animation — taller on mobile so the animation's
+                  own content has room to render without clipping at the edges */}
+              <div className="relative aspect-[4/5] sm:aspect-[16/9] lg:aspect-[21/9] group">
+                <LazyMount>{project.animation}</LazyMount>
+                <div className="absolute inset-0 bg-gradient-to-t from-bg-dark via-transparent to-transparent opacity-70 pointer-events-none" />
+
+                <div className="absolute top-4 left-4 sm:top-6 sm:left-6 flex items-center gap-3">
+                  <span className="text-[10px] sm:text-xs font-black tracking-widest text-bg-dark bg-accent px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full">
+                    &lt;{project.id}&gt;
+                  </span>
+                </div>
+                <div className="absolute top-4 right-4 sm:top-6 sm:right-6 bg-white/10 backdrop-blur-md border border-white/10 text-bg-light px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest hidden sm:block">
+                  {project.role}
                 </div>
 
-                <h3 className="text-3xl lg:text-5xl font-bold mb-2 lg:mb-4">{project.title}</h3>
-                <p className="text-accent font-bold tracking-widest uppercase text-xs mb-6 lg:mb-8">{project.subtitle}</p>
+                <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6">
+                  <h3 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-1 tracking-tight">{project.title}</h3>
+                  <p className="text-accent font-bold tracking-widest uppercase text-[10px] sm:text-xs">{project.subtitle}</p>
+                </div>
+              </div>
 
-                {/* Problem / Solution / Impact */}
-                <div className="flex flex-col gap-5 mb-8 lg:mb-10">
+              {/* Details */}
+              <div className="p-8 lg:p-14 grid grid-cols-1 lg:grid-cols-3 gap-12">
+                {/* Story */}
+                <div className="lg:col-span-2 flex flex-col gap-8">
                   <div className="flex gap-3">
                     <Target size={16} className="text-accent shrink-0 mt-1" />
                     <p className="text-secondary text-sm lg:text-base leading-relaxed">
-                      <span className="text-bg-light font-bold uppercase tracking-wider text-[10px] mr-2">Problem</span><br />
-                      {project.problem}
+                      <span className="text-bg-light font-bold uppercase tracking-wider text-[10px] mr-2 block mb-1">
+                        Challenge
+                      </span>
+                      {project.challenge}
                     </p>
                   </div>
+
                   <div className="flex gap-3">
                     <Lightbulb size={16} className="text-accent shrink-0 mt-1" />
-                    <p className="text-secondary text-sm lg:text-base leading-relaxed">
-                      <span className="text-bg-light font-bold uppercase tracking-wider text-[10px] mr-2">Solution</span><br />
-                      {project.solution}
-                    </p>
+                    <div className="flex-1">
+                      <span className="text-bg-light font-bold uppercase tracking-wider text-[10px] mr-2 block mb-3">
+                        What I Built
+                      </span>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+                        {project.highlights.map((h) => (
+                          <div key={h} className="flex items-start gap-2">
+                            <Check size={14} className="text-accent shrink-0 mt-0.5" />
+                            <span className="text-secondary text-sm leading-snug">{h}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
+
                   <div className="flex gap-3">
                     <TrendingUp size={16} className="text-accent shrink-0 mt-1" />
                     <p className="text-secondary text-sm lg:text-base leading-relaxed">
-                      <span className="text-bg-light font-bold uppercase tracking-wider text-[10px] mr-2">Impact</span><br />
-                      {project.impact}
+                      <span className="text-bg-light font-bold uppercase tracking-wider text-[10px] mr-2 block mb-1">
+                        Result
+                      </span>
+                      {project.result}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2 lg:gap-3 mb-8 lg:mb-10">
-                  {project.tech.map(t => (
-                    <span key={t} className="text-[10px] font-bold uppercase tracking-widest border border-white/10 px-4 py-2 rounded-full bg-white/5">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                <motion.a
-                  whileHover={{ x: 10 }}
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-4 group"
-                >
-                  <span className="font-bold text-sm uppercase tracking-[0.2em] group-hover:text-accent transition-colors">
-  {project.buttonText || 'View Project'}
-</span>
-                  <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:border-accent group-hover:bg-accent group-hover:text-bg-dark transition-all">
-                    <ExternalLink size={18} />
+                {/* Metrics + Tech + Links */}
+                <div className="flex flex-col gap-8">
+                  <div className="grid grid-cols-2 gap-3">
+                    {project.metrics.map((m) => (
+                      <div
+                        key={m.label}
+                        className="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col gap-1"
+                      >
+                        <span className="text-[9px] font-bold uppercase tracking-widest text-secondary">
+                          {m.label}
+                        </span>
+                        <span className="text-sm font-bold text-bg-light tracking-tight">{m.value}</span>
+                      </div>
+                    ))}
                   </div>
-                </motion.a>
-              </div>
 
-              {/* Animation Content — only animates while in/near view */}
-              <div className={`lg:col-span-7 relative group order-1 ${i % 2 !== 0 ? 'lg:order-1' : 'lg:order-2'}`}>
-                <motion.div
-                  whileHover={{ scale: 0.98 }}
-                  transition={{ duration: 0.6 }}
-                  className="overflow-hidden rounded-[2rem] border border-white/5 glow-hover transition-all duration-700 aspect-[4/3] relative bg-white/5"
-                >
-                  <LazyMount>{project.animation}</LazyMount>
-                  <div className="absolute inset-0 bg-gradient-to-t from-bg-dark/80 via-transparent to-transparent opacity-60 pointer-events-none" />
-                </motion.div>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="text-[10px] font-bold uppercase tracking-widest border border-white/10 px-4 py-2 rounded-full bg-white/5"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
 
-                <div className="absolute -top-6 -right-6 bg-accent text-bg-dark p-6 rounded-2xl font-bold text-xs uppercase tracking-widest shadow-2xl hidden lg:block rotate-6 group-hover:rotate-0 transition-transform duration-500">
-                  {project.role}
+                  <div className="flex flex-col gap-3 mt-auto">
+                    {project.links.map((link) => (
+                      <motion.a
+                        key={link.url}
+                        whileHover={{ x: 6 }}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-between gap-4 group border border-white/10 rounded-2xl px-5 py-4 hover:border-accent transition-colors"
+                      >
+                        <span className="font-bold text-sm uppercase tracking-[0.2em] group-hover:text-accent transition-colors">
+                          {link.label}
+                        </span>
+                        <ExternalLink size={16} className="group-hover:text-accent transition-colors" />
+                      </motion.a>
+                    ))}
+                  </div>
                 </div>
               </div>
             </motion.div>

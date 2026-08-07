@@ -10,7 +10,14 @@ import {
   Trees as Tree,
   Globe,
   Heart,
-  Users
+  Users,
+  Dumbbell,
+  Award,
+  Film,
+  Play,
+  Star,
+  Home,
+  Tag
 } from 'lucide-react';
 
 export const MapAnimation = () => {
@@ -128,9 +135,10 @@ export const AIAnimation = () => {
         }}
         transition={{ duration: 2, repeat: Infinity }}
         style={{ willChange: 'transform' }}
-        className="relative z-10 text-accent bg-accent/10 p-8 rounded-full border border-accent/30"
+        className="relative z-10 text-accent bg-accent/10 p-5 sm:p-8 rounded-full border border-accent/30"
       >
-        <Cpu size={100} strokeWidth={1.5} />
+        <Cpu size={64} className="sm:hidden" strokeWidth={1.5} />
+        <Cpu size={100} className="hidden sm:block" strokeWidth={1.5} />
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
@@ -276,8 +284,7 @@ export const ECWAnimation = () => {
         className="absolute"
       >
         <Globe
-          size={240}
-          className="text-accent/20"
+          className="text-accent/20 w-40 h-40 sm:w-56 sm:h-56 lg:w-60 lg:h-60"
           strokeWidth={1}
         />
       </motion.div>
@@ -291,7 +298,7 @@ export const ECWAnimation = () => {
           duration: 4,
           repeat: Infinity
         }}
-        className="relative z-10 w-80 h-52 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden"
+        className="relative z-10 w-[75%] max-w-xs sm:w-80 h-44 sm:h-52 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden"
       >
         {/* Browser Header */}
         <div className="h-10 border-b border-white/10 flex items-center px-4 gap-2">
@@ -329,7 +336,7 @@ export const ECWAnimation = () => {
       <motion.div
         animate={{ y: [0, -15, 0] }}
         transition={{ duration: 4, repeat: Infinity }}
-        className="absolute top-20 left-20 bg-white/5 border border-white/10 rounded-xl px-4 py-3"
+        className="hidden sm:block absolute top-14 left-6 lg:top-20 lg:left-20 bg-white/5 border border-white/10 rounded-xl px-4 py-3"
       >
         <div className="flex items-center gap-2 text-white text-xs">
           <Users size={14} className="text-accent" />
@@ -340,7 +347,7 @@ export const ECWAnimation = () => {
       <motion.div
         animate={{ y: [0, -10, 0] }}
         transition={{ duration: 5, repeat: Infinity }}
-        className="absolute bottom-24 right-20 bg-white/5 border border-white/10 rounded-xl px-4 py-3"
+        className="hidden sm:block absolute bottom-16 right-6 lg:bottom-24 lg:right-20 bg-white/5 border border-white/10 rounded-xl px-4 py-3"
       >
         <div className="flex items-center gap-2 text-white text-xs">
           <Heart size={14} className="text-accent" />
@@ -385,6 +392,182 @@ export const ECWAnimation = () => {
         />
       </svg>
 
+    </div>
+  );
+};
+export const LiftLogAnimation = () => {
+  const bars = [0.5, 0.8, 0.4, 0.9, 0.65];
+  return (
+    <div className="relative w-full h-full bg-slate-950 overflow-hidden rounded-[2rem] flex items-center justify-center">
+      {/* Grid Background */}
+      <div
+        className="absolute inset-0 opacity-10"
+        style={{
+          backgroundImage:
+            'linear-gradient(#7cff6b 1px, transparent 1px), linear-gradient(90deg, #7cff6b 1px, transparent 1px)',
+          backgroundSize: '40px 40px'
+        }}
+      />
+
+      {/* Central Icon */}
+      <motion.div
+        animate={{
+          scale: [1, 1.1, 1],
+          boxShadow: [
+            '0 0 20px rgba(124, 255, 107, 0.2)',
+            '0 0 60px rgba(124, 255, 107, 0.5)',
+            '0 0 20px rgba(124, 255, 107, 0.2)'
+          ]
+        }}
+        transition={{ duration: 1.8, repeat: Infinity }}
+        style={{ willChange: 'transform' }}
+        className="relative z-10 text-accent bg-accent/10 p-5 sm:p-7 rounded-full border border-accent/30"
+      >
+        <Dumbbell size={44} className="sm:hidden" strokeWidth={1.5} />
+        <Dumbbell size={64} className="hidden sm:block" strokeWidth={1.5} />
+      </motion.div>
+
+      {/* PR Badge */}
+      <motion.div
+        animate={{ y: [0, -10, 0], rotate: [0, -4, 0] }}
+        transition={{ duration: 3, repeat: Infinity }}
+        className="absolute top-6 right-6 sm:top-14 sm:right-14 bg-accent text-bg-dark px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl font-bold text-[10px] sm:text-xs flex items-center gap-2 shadow-xl"
+      >
+        <Award size={14} />
+        New PR
+      </motion.div>
+
+      {/* Session Stats Card */}
+      <motion.div
+        animate={{ y: [0, -8, 0] }}
+        transition={{ duration: 4, repeat: Infinity }}
+        className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 w-[80%] max-w-[16rem] bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-3 sm:p-4"
+      >
+        <div className="flex items-end justify-between gap-2 h-14">
+          {bars.map((h, i) => (
+            <motion.div
+              key={i}
+              initial={{ height: 0 }}
+              animate={{ height: `${h * 100}%` }}
+              transition={{ duration: 1, delay: i * 0.15, repeat: Infinity, repeatType: 'reverse', repeatDelay: 1 }}
+              className="w-4 bg-accent/60 rounded-t"
+            />
+          ))}
+        </div>
+        <p className="text-[10px] uppercase tracking-widest text-secondary mt-3 text-center">Weekly Volume</p>
+      </motion.div>
+    </div>
+  );
+};
+
+export const CineStreamAnimation = () => {
+  const posters = [
+    { top: '18%', left: '12%', delay: 0 },
+    { top: '55%', left: '8%', delay: 0.6 },
+    { top: '20%', left: '78%', delay: 0.3 },
+    { top: '58%', left: '76%', delay: 0.9 },
+  ];
+  return (
+    <div className="relative w-full h-full bg-indigo-950 overflow-hidden rounded-[2rem] flex items-center justify-center">
+      <div className="absolute inset-0 opacity-10"
+           style={{ backgroundImage: 'radial-gradient(circle, #7cff6b 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+
+      {posters.map((p, i) => (
+        <motion.div
+          key={i}
+          animate={{ y: [0, -12, 0] }}
+          transition={{ duration: 3.5, repeat: Infinity, delay: p.delay }}
+          style={{ position: 'absolute', top: p.top, left: p.left, willChange: 'transform' }}
+          className="w-11 h-16 sm:w-16 sm:h-24 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center"
+        >
+          <Star size={16} className="text-accent/50" />
+        </motion.div>
+      ))}
+
+      {/* Central Play Card */}
+      <motion.div
+        animate={{ scale: [1, 1.04, 1] }}
+        transition={{ duration: 2.5, repeat: Infinity }}
+        className="relative z-10 w-[70%] max-w-[14rem] h-28 sm:h-32 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl flex flex-col items-center justify-center gap-3"
+      >
+        <motion.div
+          animate={{
+            boxShadow: [
+              '0 0 15px rgba(124, 255, 107, 0.3)',
+              '0 0 35px rgba(124, 255, 107, 0.6)',
+              '0 0 15px rgba(124, 255, 107, 0.3)'
+            ]
+          }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-bg-dark"
+        >
+          <Play size={20} fill="currentColor" />
+        </motion.div>
+        <div className="flex items-center gap-1 text-accent text-[10px] font-bold uppercase tracking-widest">
+          <Film size={12} />
+          AI Picks For You
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+export const PrimeNestAnimation = () => {
+  return (
+    <div className="relative w-full h-full bg-slate-950 overflow-hidden rounded-[2rem] flex items-center justify-center">
+      <div
+        className="absolute inset-0 opacity-10"
+        style={{
+          backgroundImage:
+            'linear-gradient(#7cff6b 1px, transparent 1px), linear-gradient(90deg, #7cff6b 1px, transparent 1px)',
+          backgroundSize: '40px 40px'
+        }}
+      />
+
+      <motion.div
+        animate={{ y: [0, -10, 0] }}
+        transition={{ duration: 4, repeat: Infinity }}
+        className="relative z-10 w-[75%] max-w-xs sm:w-80 h-44 sm:h-52 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden"
+      >
+        <div className="h-16 sm:h-24 bg-accent/10 flex items-center justify-center border-b border-white/10">
+          <Home size={28} className="text-accent/40 sm:hidden" strokeWidth={1} />
+          <Home size={40} className="text-accent/40 hidden sm:block" strokeWidth={1} />
+        </div>
+        <div className="p-4 sm:p-5">
+          <div className="h-4 bg-white/10 rounded w-2/3 mb-3" />
+          <div className="h-3 bg-white/10 rounded w-1/2 mb-4" />
+          <motion.div
+            animate={{ scale: [1, 1.05, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="inline-flex items-center gap-2 bg-accent text-bg-dark px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl font-bold text-[10px] sm:text-xs"
+          >
+            <Tag size={14} />
+            For Sale
+          </motion.div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        animate={{ y: [0, -12, 0] }}
+        transition={{ duration: 5, repeat: Infinity }}
+        className="hidden sm:block absolute top-14 left-6 lg:top-16 lg:left-16 bg-white/5 border border-white/10 rounded-xl px-4 py-3"
+      >
+        <div className="flex items-center gap-2 text-white text-xs">
+          <Home size={14} className="text-accent" />
+          Custom CPT Listings
+        </div>
+      </motion.div>
+
+      <motion.div
+        animate={{ y: [0, -9, 0] }}
+        transition={{ duration: 4.5, repeat: Infinity }}
+        className="hidden sm:block absolute bottom-14 right-6 lg:bottom-16 lg:right-16 bg-white/5 border border-white/10 rounded-xl px-4 py-3"
+      >
+        <div className="flex items-center gap-2 text-white text-xs">
+          <Tag size={14} className="text-accent" />
+          Property Galleries
+        </div>
+      </motion.div>
     </div>
   );
 };

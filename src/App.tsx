@@ -407,25 +407,25 @@ const About = () => {
 const Experience = () => {
   const jobs = [
   {
-  role: 'WordPress Developer',
-  company: 'Murkez',
+  role: 'Trainee Software Engineer',   
+  company: 'Murkez Technologies',      
   project: 'ECW Global',
   tagline: 'Nonprofit Website',
   link: 'https://ecw-global.org/',
   points: [
-    'Worked on a live production website for a nonprofit organization',
-    'Developed and customized WordPress themes, plugins, and page builder layouts',
-    'Built responsive UI sections using Elementor and Avada-based components',
-    'Improved website UI/UX and ensured mobile responsiveness across devices',
-    'Collaborated with the development team on a production-level WordPress codebase'
+  'Worked on a live production website for a nonprofit organization',
+  'Developed and customized WordPress themes and plugins using PHP, JavaScript, HTML, and CSS',
+  'Built responsive UI sections using Elementor and Avada-based components',
+  'Improved website UI/UX and ensured mobile responsiveness across devices',
+  'Collaborated with the development team on a production-level WordPress codebase'
   ]
 },
     {
-      role: '.NET Developer Intern',
-      company: 'Lumensoft',
-      project: 'Nimbus RMS',
-      tagline: 'Enterprise System',
-      link: 'https://www.nimbusrms.com/',
+  role: 'Software Engineer Intern',    // was '.NET Developer Intern'
+  company: 'LumenSoft',                // was 'Lumensoft'
+  project: 'Nimbus RMS',
+  tagline: 'Enterprise System',
+  link: 'https://www.nimbusrms.com/',
       points: [
         'Contributed to the development of Nimbus RMS, an enterprise-level system',
         'Developed backend features using ASP.NET',
@@ -958,10 +958,10 @@ const GitHubHighlights = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto">
               {[
-                { name: 'map-my-trip', desc: 'Full-stack travel booking platform with AI-powered assistance.', lang: 'JavaScript' },
-                { name: 'QuickGPT', desc: 'Advanced AI interaction suite featuring chat and image generation.', lang: 'JavaScript' },
-                { name: 'NASA-app', desc: "Data-driven space exploration interface utilizing NASA's public APIs.", lang: 'JavaScript' },
-                { name: 'mern-ThinkBoard', desc: 'A simple and modern note-taking application built using the MERN stack.', lang: 'JavaScript' }
+               { name: 'map-my-trip', desc: 'Full-stack travel booking platform with AI-powered assistance.', lang: 'JavaScript' },
+{ name: 'QuickGPT', desc: 'Advanced AI interaction suite featuring chat and image generation.', lang: 'JavaScript' },
+{ name: 'ChatSphere', desc: 'Real-time MERN chat app with Socket.IO messaging and JWT auth.', lang: 'JavaScript' },
+{ name: 'CineStream', desc: 'MERN movie discovery platform with AI-powered recommendations.', lang: 'JavaScript' },
               ].map((repo) => (
                 <motion.a
                   key={repo.name}
